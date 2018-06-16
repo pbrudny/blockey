@@ -25,8 +25,6 @@ app.post('/kyc', function(req, res) {
     res.writeHead(200, headers);
     res.end();
   } else {
-
-
     console.log("Received data");
     var token = req.body.token;
     var wallet = req.body.wallet;
@@ -51,7 +49,7 @@ app.get('/', function(req, res) {
 app.get('/success', function (req, res) {
   console.log('Success');
   res.send('Success');
-})
+});
 
 
 app.use(function(req, res, next) {

@@ -1,0 +1,48 @@
+.header {
+  display: block;
+  font-family: Ubuntu;
+  font-size: 26px;
+  color: #454545;
+  width: 100%;
+  text-align: center;
+  padding: 30px 0;
+}
+
+$box-shadow: 3px 4px 5px 0px rgba(0,0,0,0.25);
+
+.box {
+  border: 1px solid #e5e5e5;
+  border-radius: 5px;
+  -webkit-box-shadow: $box-shadow;
+  -moz-box-shadow: $box-shadow;
+  box-shadow: $box-shadow;
+}
+
+.main-box {
+  width: 750px;
+  margin: 0 auto;
+  padding: 30px;
+
+  p {
+    text-align: center;
+    color: #898989;
+    font-weight: 300;
+  }
+}
+
+.main-form {
+  padding: 0 10%;
+  margin-top: 20px;
+  .ui.input {
+    width: 100%;
+    margin-bottom: 20px;
+  }
+}
+
+.actions {
+  text-align: center;
+}
+
+.submit-button {
+  margin: 0 auto;
+}
