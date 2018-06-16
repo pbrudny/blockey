@@ -8,7 +8,6 @@ import 'semantic-ui-css/semantic.min.css';
 import 'root/styles/main.scss';
 import './styles.scss';
 
-
 class App extends Component {
 
   render() {
