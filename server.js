@@ -9,8 +9,6 @@ var app = express();
 app.use(bodyParser.json()); // support json encoded bodies
 app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
 
-// const testnet = "https://rinkeby.infura.io/" + process.env.INFURA_ACCESS_TOKEN;
-
 const localnet = 'http://localhost:8545';
 const web3 = new Web3( new Web3.providers.HttpProvider(localnet) );
 const {utils} = web3;
