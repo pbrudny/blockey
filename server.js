@@ -13,6 +13,7 @@ app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
 
 const localnet = 'http://localhost:8545';
 const web3 = new Web3( new Web3.providers.HttpProvider(localnet) );
+const {utils} = web3;
 
 app.post('/kyc', function(req, res) {
   if (req.method === 'OPTIONS') {
@@ -33,12 +34,13 @@ app.post('/kyc', function(req, res) {
     var wallet = req.body.wallet;
     var hashedData = req.body.hashed_data;
     var result = psd2Result.firstName + psd2Result.lastName + psd2Result.email;
- 
-    var hashFromBank = Web3.sha3(result);
+    var hashFromBank = utils.sha3(result);
     if (hashFromBank === hashedData) {
-      //TODO: call method on Smart Contract
+      res.send("YES");
+      // TODO: call contract
+    } else {
+      res.send(hashFromBank);
     }
-    res.send(hashFromBank);
   }
 });
 
