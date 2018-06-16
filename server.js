@@ -16,7 +16,7 @@ const localnet = 'http://localhost:8545';
 const infura = 'https://ropsten.infura.io/aSkZNGyMOzIcw1eOLEj9'
 const web3 = new Web3( new Web3.providers.HttpProvider(infura) );
 const {utils} = web3;
-const contractAddress = "0xcdf29525b1b81ea064f123c5524737eabb5547ed";
+const contractAddress = "0x3603d6dd4034d91130722dbc4b0a0769a3ae8f4a";
 let contract = new web3.eth.Contract(kycJson.abi, contractAddress);
 
 const privateKey = '28b8154da399ae122867893502d290d988d63bbfa478149d8c688b412bc129e6';
@@ -42,16 +42,20 @@ app.post('/kyc', async function(req, res) {
     var token = req.body.token;
     var wallet = req.body.wallet;
     var hashedData = req.body.hashed_data;
+
+    // psd2Result = ........ TBD
+
     var result = psd2Result.firstName + psd2Result.lastName + psd2Result.email + psd2Result.identificationNumber;
     var hashFromBank = utils.sha3(result);
 
-    const callResult = await contract.methods.checkOwnership("0xcdf29525b1b81ea064f123c5524737eabb5547ed", "0x02e82a26540a3a4f0fbffc10dc2aa00b64f58824ca2e6cac79c7b4bac1e41d5c").call({from: web3.eth.defaultAccount, gas: 34856})
-
     if (hashFromBank === hashedData) {
-      res.send("YES");
-      // TODO: call contract
+      try {
+        await contract.methods.addOwnership(wallet, hashedData).send({from: web3.eth.defaultAccount, gas: 50000});
+      } catch (error) {
+        res.send("NO");
+      }res.send("YES");
     } else {
-      res.send(hashFromBank);
+      res.send("NO");
     }
   }
 });
