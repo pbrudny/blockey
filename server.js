@@ -1,6 +1,6 @@
 var express = require('express');
 var bodyParser = require('body-parser');
-// var Web3 = require('web3');
+var Web3 = require('web3');
 
 var port = process.env.PORT || 8000;
 var app = express();
@@ -9,11 +9,11 @@ app.use(bodyParser.json()); // support json encoded bodies
 app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
 
 // const testnet = "https://rinkeby.infura.io/" + process.env.INFURA_ACCESS_TOKEN;
-// const web3 = new Web3( new Web3.providers.HttpProvider(testnet) );
+
+const localnet = 'http://localhost:8545';
+const web3 = new Web3( new Web3.providers.HttpProvider(localnet) );
 
 app.post('/kyc', function(req, res) {
-
-
 
   if (req.method === 'OPTIONS') {
     console.log('!OPTIONS');
@@ -45,7 +45,7 @@ app.post('/kyc', function(req, res) {
 });
 
 app.get('/', function(req, res) {
-  // console.log(web3);
+  console.log(web3);
   res.send('Hello from BlocKey!');
 });
 
