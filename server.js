@@ -34,7 +34,9 @@ app.post('/kyc', function(req, res) {
 
     // TODO: call alior with the token to get user details
     var result = "hey";
-    //TODO: var hashFromBank = Web3.sha3(result);
+    //TODO: 
+    var hashFromBank = Web3.sha3(result);
+    console.log(hashFromBank);
     var hashFromBank = "something";
     if (hashFromBank === hashedData) {
       //TODO: call method on Smart Contract
