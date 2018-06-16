@@ -33,7 +33,7 @@ app.post('/kyc', function(req, res) {
     var token = req.body.token;
     var wallet = req.body.wallet;
     var hashedData = req.body.hashed_data;
-    var result = psd2Result.firstName + psd2Result.lastName + psd2Result.email;
+    var result = psd2Result.firstName + psd2Result.lastName + psd2Result.email + psd2Result.identificationNumber;
     var hashFromBank = utils.sha3(result);
     if (hashFromBank === hashedData) {
       res.send("YES");
@@ -57,7 +57,8 @@ app.get('/success', function (req, res) {
 var psd2Result = {
   firstName: "John",
   lastName: "Doe",
-  email: "john.doe@gmail.com"    
+  email: "john.doe@gmail.com",
+  identificationNumber: "84010902434"   
 }
 
 app.post('/psd2/my/transactions', function(req, res) { 
