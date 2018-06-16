@@ -5,16 +5,27 @@ var Web3 = require('web3');
 var port = process.env.PORT || 8000;
 var app = express();
 
+const kycJson = require('./contracts/KYCValidations.json');
+
+
 app.use(bodyParser.json()); // support json encoded bodies
 app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
 
 // const testnet = "https://rinkeby.infura.io/" + process.env.INFURA_ACCESS_TOKEN;
 
 const localnet = 'http://localhost:8545';
-const web3 = new Web3( new Web3.providers.HttpProvider(localnet) );
+const infura = 'https://ropsten.infura.io/aSkZNGyMOzIcw1eOLEj9'
+const web3 = new Web3( new Web3.providers.HttpProvider(infura) );
 const {utils} = web3;
+const contractAddress = "0xcdf29525b1b81ea064f123c5524737eabb5547ed";
+let contract = new web3.eth.Contract(kycJson.abi, contractAddress);
 
-app.post('/kyc', function(req, res) {
+const privateKey = '28b8154da399ae122867893502d290d988d63bbfa478149d8c688b412bc129e6';
+const account = web3.eth.accounts.privateKeyToAccount('0x' + privateKey);
+web3.eth.accounts.wallet.add(account);
+web3.eth.defaultAccount = account.address;
+
+app.post('/kyc', async function(req, res) {
   if (req.method === 'OPTIONS') {
     console.log('!OPTIONS');
     var headers = {};
@@ -36,6 +47,9 @@ app.post('/kyc', function(req, res) {
     // TODO: call alior with the token to get user details
     var result = "hey";
     var hashFromBank = utils.sha3(result);
+
+    const callResult = await contract.methods.checkOwnership("0xcdf29525b1b81ea064f123c5524737eabb5547ed", "0x02e82a26540a3a4f0fbffc10dc2aa00b64f58824ca2e6cac79c7b4bac1e41d5c").call({from: web3.eth.defaultAccount, gas: 34856})
+
     if (hashFromBank === hashedData) {
       //TODO: call method on Smart Contract
     }
