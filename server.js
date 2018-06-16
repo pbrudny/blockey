@@ -28,7 +28,7 @@ app.post('/kyc', function(req, res) {
 });
 
 app.get('/', function(req, res) {
-  console.log(web3);
+  // console.log(web3);
   res.send('Hello from BlocKey!');
 });
 
