@@ -12,6 +12,7 @@ app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
 
 const localnet = 'http://localhost:8545';
 const web3 = new Web3( new Web3.providers.HttpProvider(localnet) );
+const {utils} = web3;
 
 app.post('/kyc', function(req, res) {
   if (req.method === 'OPTIONS') {
@@ -34,8 +35,7 @@ app.post('/kyc', function(req, res) {
 
     // TODO: call alior with the token to get user details
     var result = "hey";
-    //TODO: var hashFromBank = Web3.sha3(result);
-    var hashFromBank = "something";
+    var hashFromBank = utils.sha3(result);
     if (hashFromBank === hashedData) {
       //TODO: call method on Smart Contract
     }
