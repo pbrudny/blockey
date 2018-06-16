@@ -28,8 +28,6 @@ app.post('/kyc', function(req, res) {
     res.writeHead(200, headers);
     res.end();
   } else {
-
-
     console.log("Received data");
     var token = req.body.token;
     var wallet = req.body.wallet;
@@ -82,14 +80,6 @@ app.use(function(req, res, next) {
         next();
     }
 });
-
-
-
-
-
-
-
-
 
 
 app.listen(port, function() {
