@@ -14,7 +14,6 @@ const localnet = 'http://localhost:8545';
 const web3 = new Web3( new Web3.providers.HttpProvider(localnet) );
 
 app.post('/kyc', function(req, res) {
-
   if (req.method === 'OPTIONS') {
     console.log('!OPTIONS');
     var headers = {};
@@ -52,7 +51,7 @@ app.get('/', function(req, res) {
 app.get('/success', function (req, res) {
   console.log('Success');
   res.send('Success');
-})
+});
 
 
 app.use(function(req, res, next) {
@@ -80,7 +79,6 @@ app.use(function(req, res, next) {
         next();
     }
 });
-
 
 app.listen(port, function() {
   console.log('Our app is running on http://localhost:' + port);
