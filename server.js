@@ -1,6 +1,7 @@
 var express = require('express');
 var bodyParser = require('body-parser');
 var Web3 = require('web3');
+const request = require('request');
 
 var port = process.env.PORT || 8000;
 var app = express();
@@ -31,22 +32,17 @@ app.post('/kyc', function(req, res) {
     var token = req.body.token;
     var wallet = req.body.wallet;
     var hashedData = req.body.hashed_data;
-
-    // TODO: call alior with the token to get user details
-    var result = "hey";
-    //TODO: 
+    var result = psd2Result.firstName + psd2Result.lastName + psd2Result.email;
+ 
     var hashFromBank = Web3.sha3(result);
-    console.log(hashFromBank);
-    var hashFromBank = "something";
     if (hashFromBank === hashedData) {
       //TODO: call method on Smart Contract
     }
-    res.send(wallet + ' ' + token + ' ' + hashedData);
+    res.send(hashFromBank);
   }
 });
 
 app.get('/', function(req, res) {
-  console.log(web3);
   res.send('Hello from BlocKey!');
 });
 
@@ -55,6 +51,24 @@ app.get('/success', function (req, res) {
   res.send('Success');
 });
 
+// mocked psd2 endpoints
+var psd2Result = {
+  firstName: "John",
+  lastName: "Doe",
+  email: "john.doe@gmail.com"    
+}
+
+app.post('/psd2/my/transactions', function(req, res) { 
+  if (req.body.token === "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyIiOiIifQ.1cFjlFgBpDQI9ZEDSLLtceT6VXDVW79nBIY23Q6jRcM") {
+    res.json(psd2Result);
+  } else {
+    res.sendStatus(400);
+  }
+});
+
+app.post('/psd2/my/logins/direct', function(req, res) { 
+  res.send("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyIiOiIifQ.1cFjlFgBpDQI9ZEDSLLtceT6VXDVW79nBIY23Q6jRcM");
+});
 
 app.use(function(req, res, next) {
     var oneof = false;
