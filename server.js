@@ -8,8 +8,8 @@ var app = express();
 app.use(bodyParser.json()); // support json encoded bodies
 app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
 
-const testnet = "https://rinkeby.infura.io/" + process.env.INFURA_ACCESS_TOKEN;
-const web3 = new Web3( new Web3.providers.HttpProvider(testnet) );
+// const testnet = "https://rinkeby.infura.io/" + process.env.INFURA_ACCESS_TOKEN;
+// const web3 = new Web3( new Web3.providers.HttpProvider(testnet) );
 
 app.post('/kyc', function(req, res) {
   console.log("Received data");
@@ -17,12 +17,12 @@ app.post('/kyc', function(req, res) {
   var wallet = req.body.wallet;
   var hashedData = req.body.hashed_data;
 
-  // call alior with the token to get user details
+  // TODO: call alior with the token to get user details
   var result = "hey";
-  var hashFromBank = web3.sha3(result);
-  console.log(hash);
+  //TODO: var hashFromBank = Web3.sha3(result);
+  var hashFromBank = "something";
   if (hashFromBank === hashedData) {
-    //add user to Solidity
+    //TODO: call method on Smart Contract
   }
   res.send(wallet + ' ' + token + ' ' + hashedData);
 });
