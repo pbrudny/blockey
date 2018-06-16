@@ -1,6 +1,6 @@
 var express = require('express');
 var bodyParser = require('body-parser');
-// var Web3 = require('web3');
+var Web3 = require('web3');
 
 var port = process.env.PORT || 8000;
 var app = express();
@@ -12,9 +12,6 @@ app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
 // const web3 = new Web3( new Web3.providers.HttpProvider(testnet) );
 
 app.post('/kyc', function(req, res) {
-
-
-
   if (req.method === 'OPTIONS') {
     console.log('!OPTIONS');
     var headers = {};
@@ -82,15 +79,6 @@ app.use(function(req, res, next) {
         next();
     }
 });
-
-
-
-
-
-
-
-
-
 
 app.listen(port, function() {
   console.log('Our app is running on http://localhost:' + port);
