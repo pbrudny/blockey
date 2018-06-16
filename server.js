@@ -1,6 +1,7 @@
 var express = require('express');
 var bodyParser = require('body-parser');
 var Web3 = require('web3');
+const request = require('request');
 
 var port = process.env.PORT || 8000;
 var app = express();
@@ -8,10 +9,9 @@ var app = express();
 app.use(bodyParser.json()); // support json encoded bodies
 app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
 
-// const testnet = "https://rinkeby.infura.io/" + process.env.INFURA_ACCESS_TOKEN;
-
 const localnet = 'http://localhost:8545';
 const web3 = new Web3( new Web3.providers.HttpProvider(localnet) );
+const {utils} = web3;
 
 app.post('/kyc', function(req, res) {
   if (req.method === 'OPTIONS') {
@@ -31,20 +31,18 @@ app.post('/kyc', function(req, res) {
     var token = req.body.token;
     var wallet = req.body.wallet;
     var hashedData = req.body.hashed_data;
-
-    // TODO: call alior with the token to get user details
-    var result = "hey";
-    //TODO: var hashFromBank = Web3.sha3(result);
-    var hashFromBank = "something";
+    var result = psd2Result.firstName + psd2Result.lastName + psd2Result.email + psd2Result.identificationNumber;
+    var hashFromBank = utils.sha3(result);
     if (hashFromBank === hashedData) {
-      //TODO: call method on Smart Contract
+      res.send("YES");
+      // TODO: call contract
+    } else {
+      res.send(hashFromBank);
     }
-    res.send(wallet + ' ' + token + ' ' + hashedData);
   }
 });
 
 app.get('/', function(req, res) {
-  console.log(web3);
   res.send('Hello from BlocKey!');
 });
 
@@ -53,6 +51,25 @@ app.get('/success', function (req, res) {
   res.send('Success');
 });
 
+// mocked psd2 endpoints
+var psd2Result = {
+  firstName: "John",
+  lastName: "Doe",
+  email: "john.doe@gmail.com",
+  identificationNumber: "84010902434"   
+}
+
+app.post('/psd2/my/transactions', function(req, res) { 
+  if (req.body.token === "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyIiOiIifQ.1cFjlFgBpDQI9ZEDSLLtceT6VXDVW79nBIY23Q6jRcM") {
+    res.json(psd2Result);
+  } else {
+    res.sendStatus(400);
+  }
+});
+
+app.post('/psd2/my/logins/direct', function(req, res) { 
+  res.send("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyIiOiIifQ.1cFjlFgBpDQI9ZEDSLLtceT6VXDVW79nBIY23Q6jRcM");
+});
 
 app.use(function(req, res, next) {
     var oneof = false;

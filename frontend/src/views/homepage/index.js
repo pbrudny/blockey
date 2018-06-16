@@ -13,8 +13,10 @@ class TradesView extends Component {
 
   state = {
     wallet: '',
-    first_name: 'Kuba',
-    last_name: 'W',
+    first_name: 'John',
+    last_name: 'Doe',
+    email: 'john.doe@gmail.com',
+    identificationNumber: '84010902434'
   };
 
   componentDidMount() {
@@ -38,7 +40,15 @@ class TradesView extends Component {
   }
 
   submit = () => {
-    const hash = window.web3.sha3( this.state.first_name + this.state.last_name);
+
+      //this.state.wallet
+    const hash = window.web3.sha3(
+      this.state.first_name + this.state.last_name + this.state.email + this.state.identificationNumber
+    );
+
+    console.log('hash', hash);
+
+
     const data = {
       'token': 'xxx',
       'hashed_data': hash,
@@ -64,6 +74,8 @@ class TradesView extends Component {
                   <Input placeholder='Eth wallet address (0x...)' value={this.state.wallet} /><br/>
                   <Input placeholder='First name' value={this.state.first_name} /><br/>
                   <Input placeholder='Last name' value={this.state.last_name} /><br/>
+                  <Input placeholder='Email' value={this.state.email} /><br/>
+                  <Input placeholder='Identification number' value={this.state.identificationNumber} /><br/>
 
                   <div className="actions">
                     <Button className="submit-button" onClick={this.submit}>Submit</Button>
