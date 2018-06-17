@@ -14,4 +14,4 @@ http://github.com/pbrudny/blockey-react
 yarn install
 yarn start
 ```
-* running on localhost:8000
+* running on http://localhost:8000
