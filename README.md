@@ -18,3 +18,11 @@ yarn install
 yarn start
 ```
 * running on http://localhost:8000
+
+## Contributors
+* [Jakub Włodarczyk](https://github.com/fenris85)
+* [Bartłomiej Rutkowski](https://github.com/anze1m)
+* [Piotr Brudny](https://github.com/pbrudny)
+* [Justyna Broniszewska](https://github.com/justynabraniszewska)
+* [Łukasz Misiak]()
+* [Piotr Sobczak]()
