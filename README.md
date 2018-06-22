@@ -36,3 +36,6 @@ yarn start
 * [Justyna Broniszewska](https://github.com/justynabroniszewska)
 * [Łukasz Misiak]()
 * [Piotr Sobczak]()
+
+## License
+Blockey is released under the MIT License.
